@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,11 @@ Route::get('users', function () {
         ]
     ]);
 });
+
+Route::prefix('auth')->group(
+    function () {
+        Route::post('register-user', [AuthController::class, 'registerUser']);
+        Route::post('login', [AuthController::class, 'login']);
+        Route::get('logout', [AuthController::class, 'logout']);
+    }
+);
