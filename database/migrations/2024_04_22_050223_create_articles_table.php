@@ -12,7 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('description');
+            $table->string('category');
+            $table->boolean('is_audio_article')->default(true);
+            $table->string('cover_image')->nullable();
+            $table->string('audio_file')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

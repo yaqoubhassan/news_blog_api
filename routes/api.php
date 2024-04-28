@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -19,16 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::get('users', function () {
     return response()->json([
         'data' => [
-            'name' => 'Yaqoub Hassan',
+            'name' => 'Yaqoub',
             'age' => 32,
-            'address' => 'Alajo - Accra, Ghana',
-            'nationality' => 'Ghanaian'
+            'gender' => 'male'
         ]
     ]);
 });
+
+
 
 Route::prefix('auth')->group(
     function () {
@@ -37,3 +41,8 @@ Route::prefix('auth')->group(
         Route::get('logout', [AuthController::class, 'logout']);
     }
 );
+
+// Route::group(['middleware' => 'auth:api'], function () {
+//     Route::apiResource('articles', ArticleController::class);
+// });
+Route::apiResource('articles', ArticleController::class);
